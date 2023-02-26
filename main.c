@@ -2,6 +2,9 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include "genera_escena_casa.h"
+
+
+
 int main(int argc, char** argv) {
     //Nombre de la ventana
     char* WINDOW_NAME = "Ventana Prueba";
@@ -34,6 +37,7 @@ int main(int argc, char** argv) {
     glutMouseFunc(mouseEventListener);
     glutKeyboardFunc(keyBoardEventListener);
     glutMainLoop();
+
 
     return EXIT_SUCCESS;
 }
