@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 
     glutCreateWindow(WINDOW_NAME);
 
-    glClearColor(0,1,1, 0); //Color cielo
+    glClearColor(0.05, 0.08, 0.16,0); //Color cielo
     //Inicio la configuracion
     iniciar_tp();
     //Dibujo en la ventana

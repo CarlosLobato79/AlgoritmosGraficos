@@ -26,12 +26,14 @@ void iniciar_tp(){
 void dibujar_tp(){
     // Limpiar el buffer de color
     glClear(GL_COLOR_BUFFER_BIT);
+    //Genero estrellas
+    generadorEstrellas(0, 800, 500, 600,3);
     //SOL
     glColor3f(0.97, 1, 0);
     generarCircuferencia(30,400,550);
 
     //Cespet
-    glColor3f(0, 0.56, 0.18);
+    glColor3f(0.38, 0.49, 0.42);
     glBegin(GL_QUADS);
     glVertex2f(800,120);
     glVertex2f(0,120);
@@ -39,22 +41,11 @@ void dibujar_tp(){
     glVertex2f(800,300);
     glEnd();
 
-    //Montanas
-    glColor3f(0, 0.49, 0.16);
-    glBegin(GL_TRIANGLES);
-    glVertex2f(-100,300);
-    glVertex2f(400,300);
-    glVertex2f(150,580);
-    glColor3f(0, 0.49, 0.16);
-    glVertex2f(500,300);
-    glVertex2f(900,300);
-    glVertex2f(700,550);
-    glColor3f(0, 0.75, 0.24);
-    glVertex2f(200,280);
-    glVertex2f(650,280);
-    glVertex2f(425,525);
-
-    glEnd();
+    //Montana
+    glColor3f(0.38, 0.49, 0.42);
+    montaniaTresMasUno(18, -50, 300,400 ,800+50 ,100);
+    glColor3f(0.48, 0.62, 0.54);
+    montaniaTresMasUno(7, -50, 300,400, 800+50 ,100);
 
     //Carretara
     glColor3f(0.2, 0.2, 0.2);
@@ -90,16 +81,15 @@ void dibujar_tp(){
     //Carro
 
 
-
     glBegin(GL_QUADS);
     //Carga
-    glColor3f(0.36, 0.01, 0.01);
+    glColor3f(0.8, 0.87, 0.87);
     glVertex2f(240,135);
     glVertex2f(185,135);
     glVertex2f(185,155);
     glVertex2f(240,155);
     //Base
-    glColor3f(0, 0.08, 0.48);
+    glColor3f(0.02, 0.06, 0.08);
     glVertex2f(300,100);
     glVertex2f(175,100);
     glVertex2f(175,140);
@@ -110,7 +100,7 @@ void dibujar_tp(){
     glVertex2f(250,160);
     glVertex2f(300,160);
     //Ventana - Vidrio
-    glColor3f(0, 0.14, 0.87);
+    glColor3f(0.65, 0.6, 0.71);
     glVertex2f(290,135);
     glVertex2f(260,135);
     glVertex2f(260,155);
@@ -151,7 +141,7 @@ void dibujar_tp(){
     glEnd();
 
     //Techo
-    glColor3f(1,1,1);
+    glColor3f(0.85, 0.36, 0.22);
     glBegin(GL_TRIANGLES);
     glVertex2f(760,390);
     glVertex2f(300,390);
@@ -165,10 +155,17 @@ void dibujar_tp(){
     glVertex2f(400,125);
     glVertex2f(400,300);
     glVertex2f(500,300);
+    glColor3f(0.05, 0.08, 0.16);
+    glVertex2f(490,130);
+    glVertex2f(410,130);
+    glVertex2f(410,290);
+    glVertex2f(490,290);
     glEnd();
+    glColor3f(1,1,1);
+    generarCircuferencia(5,475,200);
 
     //Ventana -Marco
-    glColor3f(1,1,1);
+    glColor3f(0.85, 0.36, 0.22);
     glBegin(GL_QUADS);
     glVertex2f(630,250);
     glVertex2f(520,250);
@@ -181,7 +178,7 @@ void dibujar_tp(){
     glVertex2f(525,345);
     glVertex2f(625,345);
     //Ventana Linea Horizontal
-    glColor3f(1,1,1);
+    glColor3f(0.85, 0.36, 0.22);
     glVertex2f(625,295);
     glVertex2f(525,295);
     glVertex2f(525,305);
@@ -195,7 +192,7 @@ void dibujar_tp(){
     glEnd();
 
     //Ventana2 -Marco
-    glColor3f(1,1,1);
+    glColor3f(0.85, 0.36, 0.22);
     glBegin(GL_QUADS);
     glVertex2f(735,250);
     glVertex2f(665,250);
@@ -208,7 +205,7 @@ void dibujar_tp(){
     glVertex2f(670,345);
     glVertex2f(730,345);
     //Ventana2 Linea Horizontal
-    glColor3f(1,1,1);
+    glColor3f(0.85, 0.36, 0.22);
     glVertex2f(730,295);
     glVertex2f(670,295);
     glVertex2f(670,305);
@@ -225,8 +222,48 @@ void dibujar_tp(){
 //Limpiar Buffer
     glFlush();
 }
+/**
+ * Genera montanas utilizando 3x+1
+ * Si el valor es par lo divide entre 2
+ * Si el valor es impar lo multiplica * 3 y le suma 1
+ * @param valorInicial
+ * @param xInicial posicion en x en nuestra pantalla
+ * @param yInicial posicion en y en nuestra pantalla
+ * @param xFinal  rango final hasta donde se extiende
+ * @param longitud espacio entre cada elevacion
+ */
+void montaniaTresMasUno(int valorInicial, int xInicial, int yInicial,int yFinal, int xFinal ,int longitud){
+    int numeroEvaluar = valorInicial;
 
+    glBegin(GL_POLYGON);
+    glVertex2f(xInicial,yInicial);
+    for(int i = longitud; i < xFinal;i=i+longitud){
 
+        if(numeroEvaluar % 2 == 0){
+            numeroEvaluar /= 2;
+            glVertex2f(i,yFinal-((int)numeroEvaluar*2));
+        }else{
+            numeroEvaluar *= 3 + 1;
+            glVertex2f(i,yFinal+((int)numeroEvaluar*2));
+
+        }
+
+    }
+    glVertex2f(xFinal,yInicial);
+    glEnd();
+    glFlush();
+}
+void generadorEstrellas(int xInicial, int xFinal, int yInicial, int yFinal,int tamanioPunto){
+
+    glColor3f(1,1,1);
+    glPointSize(tamanioPunto);
+    glBegin(GL_POINTS);
+    for(int i = xInicial; i < xFinal;i+=25){
+        glVertex2f(i,(rand()%600));
+    }
+    glEnd();
+    glFlush();
+}
 /**
  * Genera una circuferencia con cordenada
  * @param radio tamanio del circulo
@@ -249,6 +286,7 @@ void generarCircuferencia(int radio, int coordenadaX, int coordenadaY){
         //hasta su limite de diametro
         glVertex2f(x, y);
     }
+
     glEnd();
 }
 
@@ -304,9 +342,7 @@ void mouseEventListener(int boton , int estado, int x, int y){
 
 
 }
-double f(double x) {
-    return x*x;
-}
+
 /**
  *
  * @param tecla
